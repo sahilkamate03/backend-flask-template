@@ -19,32 +19,31 @@
         <div class="container">
             <section class="mx-auto my-5">
                 <div class="row">
-
+                    {% for dict in properties_data %}
                     <div class="col-md-4 mb-5">
                         <div class="card mb-4" style="max-width: 19rem;">
                             <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                                 <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg"
                                     class="img-fluid" />
-                                <a href="#!">
-                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                <a href="#!"></a>
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                                 </a>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title font-weight-bold"><a>La Sirena restaurant</a></h5>
+                                <h5 class="card-title font-weight-bold"><a>{{dict['title']}}</a></h5>
                                 <p class="card-text">
-                                    Some quick example text to build on the card title and make up the bulk of the
-                                    card's
-                                    content.
+                                    {{dict['description']}}
                                 </p>
 
                                 <hr class="my-4" />
                                 <p class="lead"><strong>Overview</strong></p>
-                                <p><strong>Rent : </strong> Rs 10,000</p>
-                                <p><strong>Type : </strong> 1 RHK</p>
+                                <p><strong>Rent : </strong> Rs {{dict['rent']}}</p>
+                                <p><strong>Type : </strong> {{dict['property_type']}}</p>
                                 <a href="#!" class="btn btn-link link-secondary p-md-1 mb-0">Button</a>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
 
 
 

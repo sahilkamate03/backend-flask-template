@@ -19,6 +19,7 @@ from wtforms.validators import (
     EqualTo,
     ValidationError,
     InputRequired,
+    NumberRange,
 )
 from core.models import Users
 
@@ -85,14 +86,29 @@ class PropertyForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired(), Length(max=100)])
     description = TextAreaField("Description", validators=[DataRequired()])
     place = StringField("Place", validators=[DataRequired(), Length(max=100)])
-    area = DecimalField("Area", validators=[DataRequired()])
-    number_of_bedrooms = IntegerField("Number of Bedrooms", validators=[DataRequired()])
+    area = IntegerField(
+        "Area",
+        validators=[
+            DataRequired(),
+            NumberRange(min=1, message="Area must be a positive integer."),
+        ],
+    )
+    number_of_bedrooms = IntegerField(
+        "Number of Bedrooms",
+        validators=[
+            DataRequired(),
+            NumberRange(min=1, message="Number of bedrooms must be at least 1."),
+        ],
+    )
     number_of_bathrooms = IntegerField(
-        "Number of Bathrooms", validators=[DataRequired()]
+        "Number of Bathrooms",
+        validators=[
+            DataRequired(),
+            NumberRange(min=1, message="Number of bathrooms must be at least 1."),
+        ],
     )
     nearby_hospitals = BooleanField("Nearby Hospitals")
     nearby_colleges = BooleanField("Nearby Colleges")
-    price = DecimalField("Price", validators=[DataRequired()])
     property_type = StringField(
         "Property Type", validators=[DataRequired(), Length(max=50)]
     )
@@ -117,14 +133,27 @@ class PropertyForm(FlaskForm):
             ("southeast", "Southeast"),
             ("southwest", "Southwest"),
         ],
-        validators=[Length(max=100)],
     )
     water_supply = StringField("Water Supply", validators=[Length(max=100)])
     gated_security = BooleanField("Gated Security")
     parking = BooleanField("Parking")
-    age_of_building = IntegerField("Age of Building")
+    age_of_building = IntegerField(
+        "Age of Building",
+        validators=[
+            NumberRange(
+                min=0, message="Age of building must be a non-negative integer."
+            )
+        ],
+    )
     balcony = BooleanField("Balcony")
-    rent = DecimalField("Rent")
-    deposit = DecimalField("Deposit")
-
+    rent = IntegerField(
+        "Rent",
+        validators=[NumberRange(min=0, message="Rent must be a non-negative integer.")],
+    )
+    deposit = IntegerField(
+        "Deposit",
+        validators=[
+            NumberRange(min=0, message="Deposit must be a non-negative integer.")
+        ],
+    )
     submit = SubmitField("Submit")

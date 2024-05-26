@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
 from core.forms import UserForm, LoginForm, RegistrationForm
-from core.models import Users
+from core.models import Users, Properties
 from core import db
 from sqlalchemy import inspect
 
@@ -17,7 +17,18 @@ def home_html():
         c.key: getattr(user_data, c.key) for c in inspect(user_data).mapper.column_attrs
     }
     print(user_dict)
-    return render_template("home.html", user_data=user_dict)
+    properties_data = Properties.query.all()
+    properties_dict = [
+        {
+            c.key: getattr(property_data, c.key)
+            for c in inspect(property_data).mapper.column_attrs
+        }
+        for property_data in properties_data
+    ]
+    print(properties_dict)
+    return render_template(
+        "home.html", user_data=user_dict, properties_data=properties_dict
+    )
 
 
 @home.route("/signin", methods=["GET", "POST"])

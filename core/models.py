@@ -43,12 +43,11 @@ class Properties(db.Model):
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     place = db.Column(db.String(100), nullable=False)
-    area = db.Column(db.Numeric(10, 2), nullable=False)
+    area = db.Column(db.Integer, nullable=False)
     number_of_bedrooms = db.Column(db.Integer, nullable=False)
     number_of_bathrooms = db.Column(db.Integer, nullable=False)
     nearby_hospitals = db.Column(db.Boolean, nullable=False)
     nearby_colleges = db.Column(db.Boolean, nullable=False)
-    price = db.Column(db.Numeric(10, 2), nullable=False)
     property_type = db.Column(db.String(50), nullable=False)
     furnishing_status = db.Column(
         db.Enum("furnished", "semi-furnished", "unfurnished", name="furnishing_status"),
@@ -61,8 +60,8 @@ class Properties(db.Model):
     posted_on = db.Column(db.Date, nullable=True)
     age_of_building = db.Column(db.Integer, nullable=True)
     balcony = db.Column(db.Boolean, nullable=True)
-    rent = db.Column(db.Numeric(10, 2), nullable=True)
-    deposit = db.Column(db.Numeric(10, 2), nullable=True)
+    rent = db.Column(db.Integer, nullable=True)
+    deposit = db.Column(db.Integer, nullable=True)
 
 
 class Likes(db.Model):
