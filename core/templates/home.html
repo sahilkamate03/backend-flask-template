@@ -1,4 +1,4 @@
-{% extends './layout/base.html' %}
+{% extends './layout/base_list.html' %}
 {% block content %}
 
 <div class="container">
@@ -39,8 +39,11 @@
                                 <p class="lead"><strong>Overview</strong></p>
                                 <p><strong>Rent : </strong> Rs {{dict['rent']}}</p>
                                 <p><strong>Type : </strong> {{dict['property_type']}}</p>
+                                <a href="/update_property_form/{{dict['id']}}" class="btn btn-danger">Like ({{2}})</a>
+
                                 <a href="/property/detail/{{dict['id']}}"
                                     class="btn btn-link link-secondary p-md-1 mb-0">More Details...</a>
+
                             </div>
                         </div>
                     </div>

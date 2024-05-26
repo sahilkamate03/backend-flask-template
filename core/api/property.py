@@ -132,5 +132,5 @@ def property_detail(property_id):
         for c in inspect(property_data).mapper.column_attrs
     }
     return render_template(
-        "property_detail.html", property_data=property_dict, user_data=user_dict
+        "property_detail.html", p_dict=property_dict, user_data=user_dict
     )

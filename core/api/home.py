@@ -11,23 +11,18 @@ home = Blueprint("home", __name__)
 
 @home.route("/")
 @login_required
-def home_html():
+def homes():
     user_data = current_user
     user_dict = {
         c.key: getattr(user_data, c.key) for c in inspect(user_data).mapper.column_attrs
     }
     print(user_dict)
-    properties_data = Properties.query.all()
-    properties_dict = [
-        {
-            c.key: getattr(property_data, c.key)
-            for c in inspect(property_data).mapper.column_attrs
-        }
-        for property_data in properties_data
-    ]
-    print(properties_dict)
+    page = request.args.get("page", 1, type=int)
+    properties_data = Properties.query.paginate(page=page, per_page=9)
+
+    # print(properties_dict)
     return render_template(
-        "home.html", user_data=user_dict, properties_data=properties_dict
+        "home.html", user_data=user_dict, properties_data=properties_data
     )
 
 
