@@ -1,22 +1,58 @@
 {% extends './layout/base.html' %}
 {% block content %}
 
-<main id="main" class="main">
+<div class="container">
+    <section class="mx-auto my-5"></section>
+    <main id="main" class="main">
 
-    <!-- Page Title -->
-    <div class="pagetitle">
-        <h1>Dashboard</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url_for('home.home_latest' ) }}">Home</a></li>
-                <li class="breadcrumb-item active">Dashboard</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
+        <!-- Page Title -->
+        <div class="pagetitle">
+            <h1>Dashboard</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('home.home_latest' ) }}">Home</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <div class="container">
+            <section class="mx-auto my-5">
+                <div class="row">
+
+                    <div class="col-md-4 mb-5">
+                        <div class="card mb-4" style="max-width: 19rem;">
+                            <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                                <img src="https://mdbootstrap.com/img/Photos/Horizontal/Food/8-col/img (5).jpg"
+                                    class="img-fluid" />
+                                <a href="#!">
+                                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title font-weight-bold"><a>La Sirena restaurant</a></h5>
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's
+                                    content.
+                                </p>
+
+                                <hr class="my-4" />
+                                <p class="lead"><strong>Overview</strong></p>
+                                <p><strong>Rent : </strong> Rs 10,000</p>
+                                <p><strong>Type : </strong> 1 RHK</p>
+                                <a href="#!" class="btn btn-link link-secondary p-md-1 mb-0">Button</a>
+                            </div>
+                        </div>
+                    </div>
 
 
-</main><!-- End #main -->
 
-<!-- home js starts -->
-<script src="{{ url_for('static', filename = 'assets/js/home.js' ) }}"></script>
-{% endblock content%}}
+                </div>
+
+
+    </main><!-- End #main -->
+
+    <!-- home js starts -->
+    <script src="{{ url_for('static', filename = 'assets/js/home.js' ) }}"></script>
+    {% endblock content%}

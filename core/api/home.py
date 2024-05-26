@@ -28,19 +28,14 @@ def signin():
     if form.validate_on_submit():
         email = form.email.data
         input_password = form.password.data
-        try:
-            user = Users.query.filter_by(email=email).first()
-            if user:
-                user_id = user.id
-
-        except:
-            flash("User not found. Create Account.", "info")
-            return redirect(url_for("home.signup"))
 
         try:
             user = Users.query.filter_by(email=email).first()
+            if user is None:
+                flash("User not found. Create Account.", "info")
+                return redirect(url_for("home.signup"))
 
-            if (user is None) or input_password != user.password:
+            if input_password != user.password:
                 flash("Login Unsuccessful. Please check email and password", "danger")
                 return redirect(url_for("home.signin"))
 

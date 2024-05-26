@@ -1,5 +1,8 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, render_template
+from flask_login import current_user, login_user, logout_user, login_required
+from sqlalchemy import inspect
 from core.models import Properties, db
+from core.forms import LoginForm, PropertyForm
 
 property = Blueprint("property", __name__)
 
@@ -38,3 +41,15 @@ def add_property_details():
     db.session.commit()
 
     return jsonify({"message": "Property details added successfully"})
+
+
+@property.route("/property_form")
+@login_required
+def property_form():
+    user_data = current_user
+    user_dict = {
+        c.key: getattr(user_data, c.key) for c in inspect(user_data).mapper.column_attrs
+    }
+    print(user_dict)
+    form = PropertyForm()
+    return render_template("property_form.html", user_data=user_dict, form=form)

@@ -9,6 +9,8 @@ from wtforms import (
     TextAreaField,
     RadioField,
     SelectField,
+    IntegerField,
+    DecimalField,
 )
 from wtforms.validators import (
     DataRequired,
@@ -77,3 +79,52 @@ class RegistrationForm(FlaskForm):
             ait = email.data.split("@")[1]
         else:
             raise ValidationError("Enter valid email.")
+
+
+class PropertyForm(FlaskForm):
+    title = StringField("Title", validators=[DataRequired(), Length(max=100)])
+    description = TextAreaField("Description", validators=[DataRequired()])
+    place = StringField("Place", validators=[DataRequired(), Length(max=100)])
+    area = DecimalField("Area", validators=[DataRequired()])
+    number_of_bedrooms = IntegerField("Number of Bedrooms", validators=[DataRequired()])
+    number_of_bathrooms = IntegerField(
+        "Number of Bathrooms", validators=[DataRequired()]
+    )
+    nearby_hospitals = BooleanField("Nearby Hospitals")
+    nearby_colleges = BooleanField("Nearby Colleges")
+    price = DecimalField("Price", validators=[DataRequired()])
+    property_type = StringField(
+        "Property Type", validators=[DataRequired(), Length(max=50)]
+    )
+    furnishing_status = SelectField(
+        "Furnishing Status",
+        choices=[
+            ("furnished", "Furnished"),
+            ("semi-furnished", "Semi-Furnished"),
+            ("unfurnished", "Unfurnished"),
+        ],
+        validators=[DataRequired()],
+    )
+    facing = SelectField(
+        "Facing",
+        choices=[
+            ("north", "North"),
+            ("south", "South"),
+            ("east", "East"),
+            ("west", "West"),
+            ("northeast", "Northeast"),
+            ("northwest", "Northwest"),
+            ("southeast", "Southeast"),
+            ("southwest", "Southwest"),
+        ],
+        validators=[Length(max=100)],
+    )
+    water_supply = StringField("Water Supply", validators=[Length(max=100)])
+    gated_security = BooleanField("Gated Security")
+    parking = BooleanField("Parking")
+    age_of_building = IntegerField("Age of Building")
+    balcony = BooleanField("Balcony")
+    rent = DecimalField("Rent")
+    deposit = DecimalField("Deposit")
+
+    submit = SubmitField("Submit")
