@@ -1,4 +1,4 @@
-{% extends "./layout/auth_layout.html" %}
+{% extends "./layout/auth_base.html" %}
 {% block content %}
 <main>
     <div class="container">
@@ -11,7 +11,7 @@
                         <div class="d-flex justify-content-center py-4">
                             <a href="index.html" class="logo d-flex align-items-center w-auto">
                                 <img src="{{ url_for('static',filename='assets/img/logo.png' )}}" alt="">
-                                <span class="d-none d-lg-block">AIT</span>
+                                <span class="d-none d-lg-block">PropertyGURU</span>
                             </a>
                         </div><!-- End Logo -->
 
@@ -37,6 +37,22 @@
                                 <form method="POST" action="" class="row g-3 needs-validation">
                                     {{ form.hidden_tag() }}
                                     <fieldset class="form-group">
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                {% if form.role.errors %}
+                                                {{ form.role(class="form-control form-control-lg is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.role.errors %}
+                                                    <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                                {% else %}
+                                                {{ form.role(class="form-control form-control-lg") }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
                                         <div class="col-12">
                                             <div class="form-group">
                                                 {{ form.name.label(class="form-label") }}
@@ -69,6 +85,25 @@
                                                 {% endif %}
                                             </div>
                                         </div>
+
+                                        <div class="col-12">
+                                            <div class="form-group">
+                                                {{ form.phone_number.label(class="form-label") }}
+                                                {% if form.phone_number.errors %}
+                                                {{ form.phone_number(class="form-control form-control-lg is-invalid",
+                                                type="number") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.phone_number.errors %}
+                                                    <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                                {% else %}
+                                                {{ form.phone_number(class="form-control form-control-lg",
+                                                type="number") }}
+                                                {% endif %}
+                                            </div>
+                                        </div>
+
 
                                         <div class="col-12">
                                             <div class="form-group">

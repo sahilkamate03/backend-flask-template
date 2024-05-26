@@ -18,6 +18,7 @@ from wtforms.validators import (
     ValidationError,
     InputRequired,
 )
+from core.models import Users
 
 
 class UserForm(FlaskForm):
@@ -40,21 +41,6 @@ class LoginForm(FlaskForm):
     password = PasswordField("Password", validators=[DataRequired()])
     remember = BooleanField("Remember Me")
 
-    def validate_email(self, email):
-        if "@" in email.data:
-            ait = email.data.split("@")[1]
-        else:
-            raise ValidationError("Enter valid email.")
-
-        if (
-            "_" not in email.data.split("@")[0]
-            or len(email.data.split("@")[0].split("_")[1]) != 5
-        ):
-            raise ValidationError("Enter valid email.")
-
-        if ait != "aitpune.edu.in":
-            raise ValidationError("Only @aitpune.edu.in email address allowed.")
-
     submit = SubmitField("Login")
 
 
@@ -62,15 +48,25 @@ class RegistrationForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired(), Length(min=2, max=50)])
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
+
     confirm_password = PasswordField(
         "Confirm Password", validators=[DataRequired(), EqualTo("password")]
+    )
+    phone_number = StringField(
+        "Phone Number", validators=[DataRequired(), Length(max=15)]
+    )
+    role = SelectField(
+        "Role",
+        choices=[("buyer", "Buyer"), ("seller", "Seller")],
+        validators=[DataRequired()],
     )
     submit = SubmitField("Create Account")
 
     def validate_email(self, email):
         try:
-            pass
-            # user = auth.get_user_by_email(email.data)
+            user = Users.query.filter_by(
+                email=email.data
+            ).first()  # Query the user by email
         except Exception as e:
             user = False
 
@@ -81,12 +77,3 @@ class RegistrationForm(FlaskForm):
             ait = email.data.split("@")[1]
         else:
             raise ValidationError("Enter valid email.")
-
-        if (
-            "_" not in email.data.split("@")[0]
-            or len(email.data.split("@")[0].split("_")[1]) != 5
-        ):
-            raise ValidationError("Enter valid email.")
-
-        if ait != "aitpune.edu.in":
-            raise ValidationError("Only @aitpune.edu.in email address allowed.")
