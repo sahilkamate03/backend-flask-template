@@ -1,15 +1,23 @@
 from flask import Blueprint, render_template, url_for, redirect, request, flash, jsonify
-from flask_login import current_user, login_user, logout_user
+from flask_login import current_user, login_user, logout_user, login_required
 from core.forms import UserForm, LoginForm, RegistrationForm
 from core.models import Users
 from core import db
+from sqlalchemy import inspect
+
 
 home = Blueprint("home", __name__)
 
 
 @home.route("/")
+@login_required
 def home_html():
-    return render_template("home.html")
+    user_data = current_user
+    user_dict = {
+        c.key: getattr(user_data, c.key) for c in inspect(user_data).mapper.column_attrs
+    }
+    print(user_dict)
+    return render_template("home.html", user_data=user_dict)
 
 
 @home.route("/signin", methods=["GET", "POST"])

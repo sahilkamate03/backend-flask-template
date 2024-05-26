@@ -1,5 +1,22 @@
 {% extends './layout/base.html' %}
 {% block content %}
 
+<main id="main" class="main">
 
-{% endblock content%}
+    <!-- Page Title -->
+    <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('home.home_latest' ) }}">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+</main><!-- End #main -->
+
+<!-- home js starts -->
+<script src="{{ url_for('static', filename = 'assets/js/home.js' ) }}"></script>
+{% endblock content%}}

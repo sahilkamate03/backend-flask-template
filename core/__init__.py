@@ -27,10 +27,11 @@ def create_app():
     )
     db.init_app(app)
     login_manager.init_app(app)
-    from core.api import dashboard, home, property
+    from core.api import dashboard, home, property, profile
 
     app.register_blueprint(home.home)
     app.register_blueprint(dashboard.dashboard)
     app.register_blueprint(property.property)
+    app.register_blueprint(profile.profile)
 
     return app
