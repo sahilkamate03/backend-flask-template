@@ -1,15 +1,36 @@
+# from cryptography.fernet import Fernet
 from flask import Flask
-from cryptography.fernet import Fernet
-import os
+from flask_cors import CORS
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
-# fernet key for encrypting and decrypting data
-# fernet = Fernet(os.getenv("FERNET_KEY"))
 
-app = Flask(__name__)
+from core.common.variables import (
+    DB_NAME,
+    DB_PWD,
+    DB_SERVER,
+    DB_USER,
+    SQL_ACLCHEMY_KEY,
+)
 
-app.config['SECRET_KEY'] = os.getenv("SQL_ACLCHEMY_KEY")
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+login_manager = LoginManager()
+db = SQLAlchemy()
 
-from core.views import home
 
-app.register_blueprint(home.home)
+def create_app():
+    app = Flask(__name__)
+    CORS(app)
+    app.config["SECRET_KEY"] = SQL_ACLCHEMY_KEY
+
+    app.config["SQLALCHEMY_DATABASE_URI"] = (
+        f"postgresql://{DB_USER}:{DB_PWD}@{DB_SERVER}/{DB_NAME}"
+    )
+    db.init_app(app)
+    login_manager.init_app(app)
+    from core.api import dashboard, home, property
+
+    app.register_blueprint(home.home)
+    app.register_blueprint(dashboard.dashboard)
+    app.register_blueprint(property.property)
+
+    return app
