@@ -7,15 +7,23 @@
 
         <!-- Page Title -->
         <div class="pagetitle">
-            <h1>Dashboard</h1>
+            <h1>Seller Listing</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url_for('home.home_latest' ) }}">Home</a></li>
-                    <li class="breadcrumb-item active">Dashboard</li>
+                    <li class="breadcrumb-item active">Seller Listing</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
-
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}}  mx-auto " role="alert">
+            {{message}}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <div class="container">
             <section class="mx-auto my-5">
                 <div class="row">
@@ -39,8 +47,8 @@
                                 <p class="lead"><strong>Overview</strong></p>
                                 <p><strong>Rent : </strong> Rs {{dict['rent']}}</p>
                                 <p><strong>Type : </strong> {{dict['property_type']}}</p>
-                                <a href="/property/detail/{{dict['id']}}"
-                                    class="btn btn-link link-secondary p-md-1 mb-0">More Details...</a>
+                                <a href="/update_property_form/{{dict['id']}}" class="btn btn-primary">Edit</a>
+                                <a href="/property_delete/{{dict['id']}}" class="btn btn-danger">Delete</a>
                             </div>
                         </div>
                     </div>
